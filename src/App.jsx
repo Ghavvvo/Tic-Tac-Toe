@@ -35,19 +35,40 @@ function App() {
     const checkWinner = (boardToCheck) => {
         for (const winningBoard of winningBoards) {
             const [a, b, c] = winningBoard
-            if (boardToCheck[a] && boardToCheck[b] === boardToCheck[a] && boardToCheck[b] === boardToCheck[c]) return a
+            if (boardToCheck[a] && boardToCheck[b] === boardToCheck[a] && boardToCheck[b] === boardToCheck[c]) return boardToCheck[a]
         }
         return null
     }
 
+    const checkIsTie = (boardToCheck) => {
+        for (const square of boardToCheck) {
+            if (square === null) return false
+        }
+        return true
+    }
+
     const updateBoard = (index) => {
-        if ((board[index]) || (winner)) return
+
+        if (board[index] || winner) return;
+
+
         changeTurn()
-        const newBoard =writeBoard(index)
+        const newBoard=writeBoard(index)
         const checkedWinner = checkWinner(newBoard)
+        const isTie = checkIsTie(newBoard)
+
+
         if(checkedWinner) {
+
             setWinner(checkedWinner)
         }
+
+        if(isTie) {
+
+            setWinner("-")
+        }
+
+
 
     }
 
@@ -56,6 +77,13 @@ function App() {
         newBoard[index] = turn
         setBoard(newBoard)
         return newBoard
+    }
+
+    const resetGame = () =>
+    {
+            setBoard(Array(9).fill(null))
+            setTurn(Turns.X)
+            setWinner(null)
     }
 
 
@@ -76,6 +104,23 @@ function App() {
                     <Square isSelected={turn === Turns.X}>{Turns.X}</Square>
                     <Square isSelected={turn === Turns.O}>{Turns.O}</Square>
                 </section>
+                {
+                    winner !== null && (
+                        <section className={"winner"}>
+                            <div className={"text"}>
+                                <h2>{winner=== "-" ? "Empate" : "Ganó : "}</h2>
+                                <header className={"win"}>
+                                    {<Square>{winner}</Square> }
+                                </header>
+                                <footer>
+                                    <button onClick={resetGame}>New Game</button>
+                                </footer>
+                            </div>
+                        </section>
+                    )
+
+
+                }
             </main>
         </>
     )
