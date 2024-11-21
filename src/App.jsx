@@ -41,10 +41,7 @@ function App() {
     }
 
     const checkIsTie = (boardToCheck) => {
-        for (const square of boardToCheck) {
-            if (square === null) return false
-        }
-        return true
+       return boardToCheck.every(square => square !== null)
     }
 
     const updateBoard = (index) => {
@@ -91,6 +88,7 @@ function App() {
         <>
             <main className={"board"}>
                 <h1>Tic Tac Toe</h1>
+                <button onClick={resetGame}>Reset</button>
                 <section className={"game"}>
                     {
                         board.map((_, index) => {
@@ -100,7 +98,9 @@ function App() {
                         })
                     }
                 </section>
+                <h2 className={"Playing"}>Playing :</h2>
                 <section className={"turn"}>
+
                     <Square isSelected={turn === Turns.X}>{Turns.X}</Square>
                     <Square isSelected={turn === Turns.O}>{Turns.O}</Square>
                 </section>
@@ -108,9 +108,9 @@ function App() {
                     winner !== null && (
                         <section className={"winner"}>
                             <div className={"text"}>
-                                <h2>{winner=== "-" ? "Empate" : "Ganó : "}</h2>
+                                <h2>{winner === "-" ? "Empate" : "Ganó : "}</h2>
                                 <header className={"win"}>
-                                    {<Square>{winner}</Square> }
+                                    {<Square>{winner}</Square>}
                                 </header>
                                 <footer>
                                     <button onClick={resetGame}>New Game</button>
@@ -122,6 +122,7 @@ function App() {
 
                 }
             </main>
+
         </>
     )
 
