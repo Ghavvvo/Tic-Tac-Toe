@@ -1,9 +1,11 @@
 import {useState} from "react";
+import confetti from "canvas-confetti"
+
 
 
 function App() {
     const Turns = {
-        X: "x",
+        X: "×",
         O: "o"
     }
     const winningBoards = [
@@ -17,8 +19,17 @@ function App() {
         [2, 4, 6]
     ]
 
-    const [board, setBoard] = useState(Array(9).fill(null))
-    const [turn, setTurn] = useState(Turns.X)
+    const [board, setBoard] = useState(() => {
+        const boardFromLocalStorage = JSON.parse(window.localStorage.getItem('board'))
+
+        return boardFromLocalStorage ??  Array(9).fill(null)
+    })
+
+
+    const [turn, setTurn] = useState(() => {
+        const turnFromLocalStorage = window.localStorage.getItem('turn')
+        return turnFromLocalStorage ??  Turns.X
+    })
     const [winner, setWinner] = useState(null)
 
     const Square = ({children, updateBoard, isSelected, index}) => {
@@ -29,6 +40,7 @@ function App() {
 
     const changeTurn = () => {
         const newTurn = turn === Turns.X ? Turns.O : Turns.X
+        window.localStorage.setItem('turn' , String(newTurn))
         setTurn(newTurn)
     }
 
@@ -54,13 +66,16 @@ function App() {
         const checkedWinner = checkWinner(newBoard)
         const isTie = checkIsTie(newBoard)
 
+        window.localStorage.setItem('board' , JSON.stringify(newBoard))
+
 
         if(checkedWinner) {
 
+            confetti()
             setWinner(checkedWinner)
         }
 
-        if(isTie) {
+       else if(isTie) {
 
             setWinner("-")
         }
@@ -81,6 +96,8 @@ function App() {
             setBoard(Array(9).fill(null))
             setTurn(Turns.X)
             setWinner(null)
+            window.localStorage.clear()
+
     }
 
 
