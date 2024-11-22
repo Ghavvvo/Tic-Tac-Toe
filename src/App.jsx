@@ -1,9 +1,9 @@
 import {useState} from "react";
 import confetti from "canvas-confetti"
 import {Turns, winningBoards} from "./Constants.jsx";
-import {OnFinish} from "./Components/OnFinish.jsx";
-import Turn from "./Components/Turn.jsx";
-import Game from "./Components/Game.jsx";
+import {OnFinish} from "./components/OnFinish.jsx";
+import Turn from "./components/Turn.jsx";
+import Game from "./components/Game.jsx";
 
 
 
