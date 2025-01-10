@@ -15,11 +15,19 @@
   -webkit-text-size-adjust: 100%;
 }
 
+#root{
+  display: grid;
+  place-items: center;
+  height: 100vh;
+}
+
 body {
-  margin: 0;
+  height: 100vh;
+  margin: 0 auto;
   display: flex;
   justify-content: center;
-  min-width: 320px;
+  width: 80%;
+
 
 
 
@@ -32,8 +40,8 @@ body {
 }
 
 .board {
-  width: fit-content;
-  margin: 40px auto;
+  width: max-content;
+  margin: 0 auto;
   text-align: center;
 }
 
@@ -122,8 +130,8 @@ body {
 }
 
 .square {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   border: 2px solid #eee;
   border-radius: 5px;
   cursor: pointer;
@@ -138,5 +146,5 @@ body {
 
 h2
 {
-  margin: 10px;
+  margin: 30px;
 }
